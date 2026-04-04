@@ -1,72 +1,93 @@
-# 武术教学智能体 (Martial Arts Teaching Agent)
+# 武术教学智能体 Martial Arts Teaching Agent
 
-本项目旨在复现并实现《生成式AI赋能传统体育教学：融合领域知识与大语言模型的武术教学智能体开发与效能评估的研究》中的核心理念。通过融合传统的武术领域知识（动作规范、心法、历史）与先进的大语言模型（LLM），构建一个能够提供个性化指导、动作解析及文化传承的智能体。
+融合领域知识与大语言模型的武术教学智能体，面向传统体育教学、课程辅导和教学研究场景。
 
-## 核心功能
+项目目标：
 
-1.  **领域知识增强 (RAG)**:
-    *   集成武术教材、动作图解、视频元数据。
-    *   使用向量数据库进行知识检索，确保回答的专业性和准确性。
+- 用 RAG 让回答更贴近武术教材与规范。
+- 用本地模型降低成本并保护数据隐私。
+- 用 Web 界面降低使用门槛，支持课堂演示与公开体验。
 
-2.  **多模态交互**:
-    *   **文本/语音**: 解答关于武术理论、历史、训练计划的问题。
-    *   **视觉 (计划中)**: 结合姿态估计 (Pose Estimation) 技术，对用户的练习动作进行评分和纠错。
+## 亮点
 
-3.  **个性化教学**:
-    *   根据用户的水平（初学者、进阶）调整教学内容的深度和难度。
-    *   生成定制化的训练计划。
+- 领域知识增强：支持 txt 与 xlsx 资料入库检索。
+- 本地免费推理：支持 Ollama，本地可运行。
+- 双入口使用：CLI 和 Streamlit Web 均可用。
+- 可扩展架构：已预留动作评估与研究评估模块扩展位。
 
 ## 系统架构
 
 ```mermaid
 graph TD
-    User[用户] --> |提问/上传视频| Interface[交互界面 (Web/App)]
+    User[用户] --> |提问/上传资料| Interface[交互界面 Web/CLI]
     Interface --> Controller[核心控制器]
-    
-    subgraph "智能体核心 (Agent Core)"
-        Controller --> Intent[意图识别]
-        Intent --> |理论询问| RAG[检索增强生成]
-        Intent --> |动作指导| Vision[视觉分析模块]
-        
-        RAG --> KnowledgeBase[(武术知识库)]
-        KnowledgeBase --> VectorDB[向量数据库]
-        
-        Vision --> PoseModel[姿态评估模型]
-        
-        RAG & Vision --> LLM[大语言模型 (Generator)]
+
+    subgraph Agent[智能体核心]
+        Controller --> RAG[检索增强生成]
+        Controller --> Eval[教学评估模块]
+        RAG --> KB[(武术知识库)]
+        KB --> VDB[向量数据库]
+        RAG --> LLM[本地或云端大模型]
     end
-    
-    LLM --> |生成反馈| Controller
-    Controller --> |回答/纠错建议| User
+
+    LLM --> Controller
+    Controller --> User
 ```
 
 ## 目录结构
 
-*   `src/`: 源代码
-    *   `agent/`: 智能体核心逻辑
-    *   `knowledge/`: 知识库管理与检索引擎
-    *   `vision/`: (预留) 视觉分析模块
-    *   `interface/`: 用户界面 (Streamlit/FastAPI)
-*   `data/`: 数据文件
-    *   `knowledge_base/`: 原始文档与处理后的数据
-*   `docs/`: 文档
-*   `tests/`: 测试用例
+- src: 核心代码
+- data/knowledge_base: 武术知识资料
+- docs: 文档与发布说明
+- scripts: 辅助脚本
+- tests: 测试目录
 
 ## 快速开始
 
-1.  安装依赖: `pip install -r requirements.txt`
-2.  配置环境变量: `.env` (API Key等)
-3.  运行: `python src/main.py`
+### 1. 安装依赖
 
-## 发布到 GitHub
+```bash
+pip install -r requirements.txt
+```
 
-如果你想把这个项目开源到 GitHub，请先阅读 [GitHub 发布指南](docs/GITHUB_RELEASE_GUIDE.md)。
+### 2. 启动本地模型服务
 
-最短流程如下：
+```bash
+ollama pull qwen2.5:1.5b
+ollama pull nomic-embed-text
+```
 
-1.  `git init`
-2.  `git add .`
-3.  `git commit -m "Initial commit: martial arts teaching agent"`
-4.  在 GitHub 创建一个公开仓库
-5.  `git remote add origin https://github.com/你的用户名/仓库名.git`
-6.  `git push -u origin main`
+### 3. 启动命令行模式
+
+```bash
+python src/main.py
+```
+
+首次建议输入 index 建立索引，随后再提问。
+
+### 4. 启动 Web 演示界面
+
+```bash
+streamlit run src/interface/app.py
+```
+
+## 面向公开演示
+
+- 局域网演示：streamlit run src/interface/app.py --server.address 0.0.0.0
+- 公网临时分享：可使用 start_public.sh
+
+## 开源协作
+
+- 贡献指南：[CONTRIBUTING.md](CONTRIBUTING.md)
+- 大文件建议：[docs/LARGE_FILES.md](docs/LARGE_FILES.md)
+- GitHub 发布流程：[docs/GITHUB_RELEASE_GUIDE.md](docs/GITHUB_RELEASE_GUIDE.md)
+
+## 当前路线图
+
+- 增加动作识别模块接入
+- 增加评测数据记录与可视化
+- 增加自动化测试与基线评测脚本
+
+## 许可证
+
+本项目采用 MIT License，见 [LICENSE](LICENSE)。
