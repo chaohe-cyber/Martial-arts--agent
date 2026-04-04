@@ -2,7 +2,13 @@
 
 [中文说明](README.md) | [English](README_EN.md)
 
+![Python](https://img.shields.io/badge/Python-3.8%2B-blue)
+![License](https://img.shields.io/badge/License-MIT-green)
+![Platform](https://img.shields.io/badge/Platform-Linux%20%7C%20Windows%20%7C%20macOS-lightgrey)
+
 A retrieval-enhanced teaching assistant for traditional martial arts education.
+
+Affiliation: Professor Tang Lixu's research team, School of Wushu, Wuhan Sports University.
 
 ## Highlights
 
@@ -57,13 +63,34 @@ ollama pull nomic-embed-text
 - scripts: utility scripts
 - tests: test placeholders
 
+Repository name convention: use `martial-arts-agent` in technical references and documentation.
+
+## Demo Notes
+
+- Classroom demo: run `./scripts/health_check.sh` first.
+- Web demo: run `./scripts/run_web.sh`.
+- Data demo: update `data/knowledge_base`, then rebuild the index before asking questions.
+
 ## Open Source Workflow
 
 - Contributing guide: [CONTRIBUTING.md](CONTRIBUTING.md)
 - Large file strategy: [docs/LARGE_FILES.md](docs/LARGE_FILES.md)
-- GitHub release steps: [docs/GITHUB_RELEASE_GUIDE.md](docs/GITHUB_RELEASE_GUIDE.md)
 - Issue templates: [.github/ISSUE_TEMPLATE](.github/ISSUE_TEMPLATE)
 - PR template: [.github/pull_request_template.md](.github/pull_request_template.md)
+
+## FAQ
+
+### 1. Why is response speed slow?
+
+Use `qwen2.5:1.5b` and verify local model status with `./scripts/health_check.sh`.
+
+### 2. Why does updated knowledge not appear in answers?
+
+Rebuild the index after updating `data/knowledge_base`.
+
+### 3. Why do I see large file warnings on GitHub?
+
+The repository includes large `.xlsx` files. See [docs/LARGE_FILES.md](docs/LARGE_FILES.md) for Git LFS guidance.
 
 ## License
 

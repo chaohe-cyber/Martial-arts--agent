@@ -38,7 +38,7 @@ ollama pull nomic-embed-text
 ```text
 feat: add streaming response in web ui
 fix: handle missing ollama model gracefully
-docs: update github release guide
+docs: improve user onboarding documentation
 ```
 
 ## Pull Request 要求

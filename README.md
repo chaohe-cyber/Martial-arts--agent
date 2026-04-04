@@ -2,7 +2,13 @@
 
 [中文说明](README.md) | [English](README_EN.md)
 
+![Python](https://img.shields.io/badge/Python-3.8%2B-blue)
+![License](https://img.shields.io/badge/License-MIT-green)
+![Platform](https://img.shields.io/badge/Platform-Linux%20%7C%20Windows%20%7C%20macOS-lightgrey)
+
 面向传统体育教学与研究场景的武术教学系统，融合武术领域知识检索与对话交互能力。
+
+作者单位：武汉体育学院武术学院汤立许教授团队。
 
 项目目标：
 
@@ -40,7 +46,7 @@ graph TD
 
 - src: 核心代码
 - data/knowledge_base: 武术知识资料
-- docs: 文档与发布说明
+- docs: 项目文档
 - scripts: 辅助脚本
 - tests: 测试目录
 
@@ -84,11 +90,16 @@ ollama pull nomic-embed-text
 - 局域网演示：streamlit run src/interface/app.py --server.address 0.0.0.0
 - 公网临时分享：可使用 start_public.sh
 
+## Demo 建议
+
+- 课堂场景：先运行 `./scripts/health_check.sh`，确认环境正常。
+- 讲解场景：使用 `./scripts/run_web.sh` 打开 Web 页面进行现场提问。
+- 研究场景：在 `data/knowledge_base` 放入课程资料后，先重建索引再演示问答。
+
 ## 开源协作
 
 - 贡献指南：[CONTRIBUTING.md](CONTRIBUTING.md)
 - 大文件建议：[docs/LARGE_FILES.md](docs/LARGE_FILES.md)
-- GitHub 发布流程：[docs/GITHUB_RELEASE_GUIDE.md](docs/GITHUB_RELEASE_GUIDE.md)
 - Issue 模板：[.github/ISSUE_TEMPLATE](.github/ISSUE_TEMPLATE)
 - PR 模板：[.github/pull_request_template.md](.github/pull_request_template.md)
 
@@ -97,6 +108,20 @@ ollama pull nomic-embed-text
 - 增加动作识别模块接入
 - 增加评测数据记录与可视化
 - 增加自动化测试与基线评测脚本
+
+## 常见问题 FAQ
+
+### 1. 回答速度慢怎么办？
+
+先执行 `ollama pull qwen2.5:1.5b`，并确认本地已使用该模型。
+
+### 2. 知识库更新后为什么回答没变化？
+
+需要重新建立索引，Web 端点击“重新索引”，或在 CLI 中输入 `index`。
+
+### 3. 推送仓库时出现大文件警告怎么办？
+
+参考 [docs/LARGE_FILES.md](docs/LARGE_FILES.md)，建议使用 Git LFS 管理 `.xlsx`。
 
 ## 许可证
 
