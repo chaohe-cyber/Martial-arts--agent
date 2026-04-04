@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720">
+  <defs>
+    <style>
+      .t { font: 700 32px Arial, sans-serif; fill: #102a45; }
+      .h { font: 700 18px Arial, sans-serif; fill: #173b5e; }
+      .m { font: 600 14px Arial, sans-serif; fill: #2b4d6d; }
+      .frame { fill: #f6fbff; stroke: #2d628f; stroke-width: 2.2; rx: 16; ry: 16; }
+      .panel { fill: #ffffff; stroke: #4e7ea7; stroke-width: 1.7; rx: 10; ry: 10; }
+      .tag { fill: #e8f2fb; stroke: #4e7ea7; stroke-width: 1.5; rx: 8; ry: 8; }
+    </style>
+  </defs>
+
+  <text x="36" y="54" class="t">武术智能体 Web 界面剖面图（中文）</text>
+
+  <rect x="40" y="90" width="1120" height="590" class="frame" />
+  <rect x="65" y="125" width="260" height="520" class="panel" />
+  <text x="125" y="160" class="h">侧边栏控制区</text>
+  <text x="86" y="190" class="m">- 模式选择</text>
+  <text x="86" y="215" class="m">- 知识库重建索引</text>
+  <text x="86" y="240" class="m">- 运行状态提示</text>
+
+  <rect x="345" y="125" width="790" height="520" class="panel" />
+  <text x="640" y="160" class="h">主交互区（聊天窗口）</text>
+
+  <rect x="370" y="190" width="740" height="130" class="tag" />
+  <text x="395" y="225" class="h">用户输入区</text>
+  <text x="395" y="252" class="m">示例：杨式太极拳一段对练要点是什么？</text>
+  <text x="395" y="278" class="m">支持连续追问与课堂演示问答</text>
+
+  <rect x="370" y="340" width="740" height="185" class="tag" />
+  <text x="395" y="375" class="h">智能体回答区</text>
+  <text x="395" y="402" class="m">结构化输出：动作要点 / 常见错误 / 训练建议</text>
+  <text x="395" y="428" class="m">回答可结合武术知识库检索结果</text>
+  <text x="395" y="454" class="m">支持流式展示，课堂演示更直观</text>
+
+  <rect x="370" y="540" width="740" height="85" class="tag" />
+  <text x="395" y="573" class="h">引用与可追溯信息</text>
+  <text x="395" y="600" class="m">展示知识片段来源，增强教学可信度</text>
+</svg>

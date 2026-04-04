@@ -25,7 +25,7 @@
 
 ## 系统架构
 
-![武术智能体系统总览](docs/figures/system_overview.svg)
+![武术智能体系统总览](docs/figures/system_overview_zh.svg)
 
 ```mermaid
 graph TD
@@ -46,7 +46,11 @@ graph TD
 
 ## 知识库处理流程图
 
-![武术知识库处理流程](docs/figures/knowledge_pipeline.svg)
+![武术知识库处理流程](docs/figures/knowledge_pipeline_zh.svg)
+
+## 武术智能体 Web 界面剖面图
+
+![武术智能体 Web 界面剖面图](docs/figures/web_section_zh.svg)
 
 ## 课堂演示流程图
 

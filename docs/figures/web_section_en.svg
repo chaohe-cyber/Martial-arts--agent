@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720">
+  <defs>
+    <style>
+      .t { font: 700 32px Arial, sans-serif; fill: #102a45; }
+      .h { font: 700 18px Arial, sans-serif; fill: #173b5e; }
+      .m { font: 600 14px Arial, sans-serif; fill: #2b4d6d; }
+      .frame { fill: #f6fbff; stroke: #2d628f; stroke-width: 2.2; rx: 16; ry: 16; }
+      .panel { fill: #ffffff; stroke: #4e7ea7; stroke-width: 1.7; rx: 10; ry: 10; }
+      .tag { fill: #e8f2fb; stroke: #4e7ea7; stroke-width: 1.5; rx: 8; ry: 8; }
+    </style>
+  </defs>
+
+  <text x="36" y="54" class="t">Martial Arts Agent Web Section View (EN)</text>
+
+  <rect x="40" y="90" width="1120" height="590" class="frame" />
+  <rect x="65" y="125" width="260" height="520" class="panel" />
+  <text x="115" y="160" class="h">Sidebar Controls</text>
+  <text x="86" y="190" class="m">- Mode selection</text>
+  <text x="86" y="215" class="m">- Knowledge re-indexing</text>
+  <text x="86" y="240" class="m">- Runtime status</text>
+
+  <rect x="345" y="125" width="790" height="520" class="panel" />
+  <text x="636" y="160" class="h">Main Interaction Panel</text>
+
+  <rect x="370" y="190" width="740" height="130" class="tag" />
+  <text x="395" y="225" class="h">User Input Area</text>
+  <text x="395" y="252" class="m">Example: What are key points in Yang-style first segment?</text>
+  <text x="395" y="278" class="m">Supports iterative classroom Q&A</text>
+
+  <rect x="370" y="340" width="740" height="185" class="tag" />
+  <text x="395" y="375" class="h">Agent Response Area</text>
+  <text x="395" y="402" class="m">Structured output: key points, common errors, training advice</text>
+  <text x="395" y="428" class="m">Response grounded with knowledge-base retrieval</text>
+  <text x="395" y="454" class="m">Streaming display for live demonstration</text>
+
+  <rect x="370" y="540" width="740" height="85" class="tag" />
+  <text x="395" y="573" class="h">Reference and Traceability</text>
+  <text x="395" y="600" class="m">Shows evidence snippets to improve teaching credibility</text>
+</svg>

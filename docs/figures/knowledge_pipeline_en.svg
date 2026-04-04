@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="560" viewBox="0 0 1200 560">
+  <defs>
+    <style>
+      .t { font: 700 32px Arial, sans-serif; fill: #12314f; }
+      .h { font: 700 19px Arial, sans-serif; fill: #1f3d5a; }
+      .m { font: 600 15px Arial, sans-serif; fill: #2c4c6d; }
+      .b { fill: #f7fbff; stroke: #2b5d8a; stroke-width: 2; rx: 14; ry: 14; }
+      .a { stroke: #2b5d8a; stroke-width: 2.5; marker-end: url(#m2); fill: none; }
+    </style>
+    <marker id="m2" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <path d="M0,0 L10,3 L0,6 z" fill="#2b5d8a" />
+    </marker>
+  </defs>
+
+  <text x="36" y="52" class="t">Martial Arts Knowledge Base Pipeline (EN)</text>
+
+  <rect x="40" y="130" width="180" height="95" class="b" />
+  <text x="93" y="168" class="h">Sources</text>
+  <text x="72" y="196" class="m">txt / xlsx materials</text>
+
+  <rect x="250" y="130" width="180" height="95" class="b" />
+  <text x="307" y="168" class="h">Loader</text>
+  <text x="274" y="196" class="m">Read and normalize</text>
+
+  <rect x="460" y="130" width="180" height="95" class="b" />
+  <text x="496" y="168" class="h">Splitter</text>
+  <text x="486" y="196" class="m">Semantic chunks</text>
+
+  <rect x="670" y="130" width="180" height="95" class="b" />
+  <text x="704" y="168" class="h">Embedding</text>
+  <text x="700" y="196" class="m">Vector encoding</text>
+
+  <rect x="880" y="130" width="210" height="95" class="b" />
+  <text x="946" y="168" class="h">Vector DB</text>
+  <text x="932" y="196" class="m">Chroma storage</text>
+
+  <rect x="430" y="320" width="250" height="105" class="b" />
+  <text x="506" y="360" class="h">Retriever</text>
+  <text x="464" y="388" class="m">Top-k relevant chunks</text>
+
+  <rect x="730" y="320" width="280" height="105" class="b" />
+  <text x="820" y="360" class="h">Prompt Build</text>
+  <text x="760" y="388" class="m">Question + context + rules</text>
+
+  <line x1="220" y1="178" x2="250" y2="178" class="a" />
+  <line x1="430" y1="178" x2="460" y2="178" class="a" />
+  <line x1="640" y1="178" x2="670" y2="178" class="a" />
+  <line x1="850" y1="178" x2="880" y2="178" class="a" />
+  <line x1="985" y1="225" x2="985" y2="320" class="a" />
+  <line x1="730" y1="373" x2="680" y2="373" class="a" />
+
+  <text x="36" y="500" class="m">Goal: ground answers in martial arts curriculum evidence and keep response logic traceable.</text>
+</svg>

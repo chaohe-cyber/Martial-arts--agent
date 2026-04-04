@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="560" viewBox="0 0 1200 560">
+  <defs>
+    <style>
+      .t { font: 700 32px Arial, sans-serif; fill: #12314f; }
+      .h { font: 700 19px Arial, sans-serif; fill: #1f3d5a; }
+      .m { font: 600 15px Arial, sans-serif; fill: #2c4c6d; }
+      .b { fill: #f7fbff; stroke: #2b5d8a; stroke-width: 2; rx: 14; ry: 14; }
+      .a { stroke: #2b5d8a; stroke-width: 2.5; marker-end: url(#m2); fill: none; }
+    </style>
+    <marker id="m2" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <path d="M0,0 L10,3 L0,6 z" fill="#2b5d8a" />
+    </marker>
+  </defs>
+
+  <text x="36" y="52" class="t">武术知识库处理流程（中文）</text>
+
+  <rect x="40" y="130" width="180" height="95" class="b" />
+  <text x="80" y="168" class="h">原始资料</text>
+  <text x="66" y="196" class="m">套路文本 / Excel</text>
+
+  <rect x="250" y="130" width="180" height="95" class="b" />
+  <text x="307" y="168" class="h">加载</text>
+  <text x="278" y="196" class="m">统一读取与清洗</text>
+
+  <rect x="460" y="130" width="180" height="95" class="b" />
+  <text x="512" y="168" class="h">切分</text>
+  <text x="486" y="196" class="m">按语义分块</text>
+
+  <rect x="670" y="130" width="180" height="95" class="b" />
+  <text x="723" y="168" class="h">向量化</text>
+  <text x="695" y="196" class="m">生成嵌入表示</text>
+
+  <rect x="880" y="130" width="210" height="95" class="b" />
+  <text x="940" y="168" class="h">向量库</text>
+  <text x="910" y="196" class="m">ChromaDB 持久化</text>
+
+  <rect x="430" y="320" width="250" height="105" class="b" />
+  <text x="510" y="360" class="h">检索器</text>
+  <text x="466" y="388" class="m">按问题召回 Top-k 片段</text>
+
+  <rect x="730" y="320" width="280" height="105" class="b" />
+  <text x="835" y="360" class="h">生成提示</text>
+  <text x="760" y="388" class="m">用户问题 + 知识片段 + 规则</text>
+
+  <line x1="220" y1="178" x2="250" y2="178" class="a" />
+  <line x1="430" y1="178" x2="460" y2="178" class="a" />
+  <line x1="640" y1="178" x2="670" y2="178" class="a" />
+  <line x1="850" y1="178" x2="880" y2="178" class="a" />
+  <line x1="985" y1="225" x2="985" y2="320" class="a" />
+  <line x1="730" y1="373" x2="680" y2="373" class="a" />
+
+  <text x="36" y="500" class="m">流程目标：让武术智能体回答时可引用可追溯，突出“武术知识库”与“教学规范一致性”。</text>
+</svg>

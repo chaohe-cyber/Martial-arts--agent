@@ -19,11 +19,15 @@ Affiliation: Professor Tang Lixu's research team, School of Wushu, Wuhan Sports 
 
 ## System Overview Figure
 
-![System overview](docs/figures/system_overview.svg)
+![System overview](docs/figures/system_overview_en.svg)
 
 ## Knowledge Base Pipeline Figure
 
-![Knowledge pipeline](docs/figures/knowledge_pipeline.svg)
+![Knowledge pipeline](docs/figures/knowledge_pipeline_en.svg)
+
+## Web Interface Section View
+
+![Web section view](docs/figures/web_section_en.svg)
 
 ## Classroom Demo Flow Figure
 
