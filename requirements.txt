@@ -1,0 +1,14 @@
+langchain
+langchain-openai
+langchain-community
+langchain-ollama
+python-dotenv
+streamlit
+chromadb
+tiktoken
+pydantic
+openai
+faiss-cpu
+numpy
+pandas
+openpyxl
