@@ -10,7 +10,7 @@
     </style>
   </defs>
 
-  <text x="36" y="54" class="t">武术智能体 Web 界面剖面图（中文）</text>
+  <text x="36" y="54" class="t">武术智能体 Web 界面剖面图</text>
 
   <rect x="40" y="90" width="1120" height="590" class="frame" />
   <rect x="65" y="125" width="260" height="520" class="panel" />

@@ -13,7 +13,7 @@
     </marker>
   </defs>
 
-  <text x="36" y="54" class="t">Martial Arts Teaching Agent - System Overview (EN)</text>
+  <text x="36" y="54" class="t">Martial Arts Teaching Agent System Overview</text>
 
   <rect x="40" y="120" width="230" height="100" class="b" />
   <text x="82" y="160" class="h">Teacher / Student</text>

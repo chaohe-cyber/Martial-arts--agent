@@ -6,16 +6,41 @@
 ![License](https://img.shields.io/badge/License-MIT-green)
 ![Platform](https://img.shields.io/badge/Platform-Linux%20%7C%20Windows%20%7C%20macOS-lightgrey)
 
-A retrieval-enhanced teaching assistant for traditional martial arts education.
+A system for traditional martial arts teaching and research, integrating domain knowledge retrieval and interactive dialogue capabilities.
 
 Affiliation: Professor Tang Lixu's research team, School of Wushu, Wuhan Sports University.
 
-## Highlights
+## Project Objectives
 
-- Domain knowledge retrieval over txt/xlsx teaching materials
-- Local model support with Ollama
-- CLI and Web entry points for classroom and demo use
-- Extensible structure for evaluation and motion-analysis modules
+- Use RAG (Retrieval-Augmented Generation) to provide answers more aligned with martial arts textbooks and standards.
+- Deploy local models to reduce costs and protect data privacy.
+- Provide web interface to lower usage threshold and support classroom demonstrations and public demos.
+
+## Features
+
+- Domain knowledge enhancement: Support txt and xlsx materials for knowledge base retrieval.
+- Local inference deployment: Support Ollama to minimize external dependencies.
+- Dual interface: Both CLI and Streamlit Web are available.
+- Extensible architecture: Pre-reserved extensions for motion evaluation and research assessment modules.
+
+## System Architecture
+
+```mermaid
+graph TD
+    User[User] --> |Questions/Materials| Interface[Interface Web/CLI]
+    Interface --> Controller[Core Controller]
+
+    subgraph Agent[Agent Core]
+        Controller --> RAG[Retrieval & Augmentation]
+        Controller --> Eval[Teaching Evaluation Module]
+        RAG --> KB[(Martial Arts Knowledge Base)]
+        KB --> VDB[Vector Database]
+        RAG --> LLM[Local or Cloud LLM]
+    end
+
+    LLM --> Controller
+    Controller --> User
+```
 
 ## System Overview Figure
 
@@ -79,13 +104,17 @@ ollama pull nomic-embed-text
 - scripts: utility scripts
 - tests: test placeholders
 
-Repository name convention: use `martial-arts-agent` in technical references and documentation.
-
 ## Demo Notes
 
 - Classroom demo: run `./scripts/health_check.sh` first.
 - Web demo: run `./scripts/run_web.sh`.
 - Data demo: update `data/knowledge_base`, then rebuild the index before asking questions.
+
+## Current Roadmap
+
+- Integrate motion recognition module
+- Record and visualize teaching evaluation data
+- Add automated tests and baseline evaluation scripts
 
 ## Open Source Workflow
 
