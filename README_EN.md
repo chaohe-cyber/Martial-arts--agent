@@ -17,6 +17,18 @@ Affiliation: Professor Tang Lixu's research team, School of Wushu, Wuhan Sports 
 - CLI and Web entry points for classroom and demo use
 - Extensible structure for evaluation and motion-analysis modules
 
+## System Overview Figure
+
+![System overview](docs/figures/system_overview.svg)
+
+## Knowledge Base Pipeline Figure
+
+![Knowledge pipeline](docs/figures/knowledge_pipeline.svg)
+
+## Classroom Demo Flow Figure
+
+![Classroom demo flow](docs/figures/classroom_demo_flow.svg)
+
 ## Getting Started
 
 ### Prerequisites

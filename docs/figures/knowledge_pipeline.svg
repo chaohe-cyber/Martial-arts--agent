@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="520" viewBox="0 0 1200 520">
+  <defs>
+    <style>
+      .title { font: 700 30px Arial, sans-serif; fill: #1a2f4a; }
+      .label { font: 600 17px Arial, sans-serif; fill: #1f3d5a; }
+      .text { font: 500 14px Arial, sans-serif; fill: #2c4c6d; }
+      .box { fill: #f8fbff; stroke: #2b5d8a; stroke-width: 2; rx: 14; ry: 14; }
+      .arrow { stroke: #2b5d8a; stroke-width: 2.5; marker-end: url(#m); fill: none; }
+    </style>
+    <marker id="m" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <path d="M0,0 L10,3 L0,6 z" fill="#2b5d8a" />
+    </marker>
+  </defs>
+
+  <text x="40" y="55" class="title">Knowledge Base Processing Pipeline</text>
+
+  <rect x="40" y="130" width="180" height="95" class="box" />
+  <text x="92" y="165" class="label">Raw Files</text>
+  <text x="78" y="192" class="text">txt / xlsx folders</text>
+
+  <rect x="250" y="130" width="180" height="95" class="box" />
+  <text x="286" y="165" class="label">Loader</text>
+  <text x="274" y="192" class="text">Read and normalize</text>
+
+  <rect x="460" y="130" width="180" height="95" class="box" />
+  <text x="492" y="165" class="label">Splitter</text>
+  <text x="490" y="192" class="text">Chunk documents</text>
+
+  <rect x="670" y="130" width="180" height="95" class="box" />
+  <text x="692" y="165" class="label">Embedding</text>
+  <text x="706" y="192" class="text">Vector encode</text>
+
+  <rect x="880" y="130" width="180" height="95" class="box" />
+  <text x="924" y="165" class="label">ChromaDB</text>
+  <text x="901" y="192" class="text">Store vector index</text>
+
+  <rect x="460" y="310" width="240" height="95" class="box" />
+  <text x="526" y="345" class="label">Retriever</text>
+  <text x="505" y="372" class="text">Top-k relevant chunks</text>
+
+  <rect x="760" y="310" width="240" height="95" class="box" />
+  <text x="835" y="345" class="label">Prompt</text>
+  <text x="786" y="372" class="text">Context + user question</text>
+
+  <line x1="220" y1="177" x2="250" y2="177" class="arrow" />
+  <line x1="430" y1="177" x2="460" y2="177" class="arrow" />
+  <line x1="640" y1="177" x2="670" y2="177" class="arrow" />
+  <line x1="850" y1="177" x2="880" y2="177" class="arrow" />
+
+  <line x1="970" y1="225" x2="970" y2="310" class="arrow" />
+  <line x1="880" y1="357" x2="700" y2="357" class="arrow" />
+
+  <text x="40" y="470" class="text">Pipeline summary: transform martial arts teaching materials into retrievable context for stable, reference-grounded answers.</text>
+</svg>

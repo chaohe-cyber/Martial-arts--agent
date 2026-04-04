@@ -25,6 +25,8 @@
 
 ## 系统架构
 
+![武术智能体系统总览](docs/figures/system_overview.svg)
+
 ```mermaid
 graph TD
     User[用户] --> |提问/上传资料| Interface[交互界面 Web/CLI]
@@ -41,6 +43,14 @@ graph TD
     LLM --> Controller
     Controller --> User
 ```
+
+## 知识库处理流程图
+
+![武术知识库处理流程](docs/figures/knowledge_pipeline.svg)
+
+## 课堂演示流程图
+
+![武术智能体课堂演示流程](docs/figures/classroom_demo_flow.svg)
 
 ## 目录结构
 

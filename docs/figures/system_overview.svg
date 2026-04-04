@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700">
+  <defs>
+    <style>
+      .title { font: 700 30px Arial, sans-serif; fill: #10243e; }
+      .label { font: 600 18px Arial, sans-serif; fill: #16324f; }
+      .text { font: 500 15px Arial, sans-serif; fill: #1f3d5a; }
+      .box { fill: #f4f8fc; stroke: #24527a; stroke-width: 2; rx: 14; ry: 14; }
+      .subbox { fill: #ffffff; stroke: #4a7ea8; stroke-width: 1.8; rx: 10; ry: 10; }
+      .arrow { stroke: #24527a; stroke-width: 2.5; marker-end: url(#m); fill: none; }
+    </style>
+    <marker id="m" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <path d="M0,0 L10,3 L0,6 z" fill="#24527a" />
+    </marker>
+  </defs>
+
+  <text x="40" y="55" class="title">Martial Arts Teaching Agent - System Overview</text>
+
+  <rect x="50" y="120" width="220" height="90" class="box" />
+  <text x="95" y="155" class="label">Teacher / Student</text>
+  <text x="90" y="182" class="text">Question or Task Input</text>
+
+  <rect x="340" y="100" width="510" height="500" class="box" />
+  <text x="520" y="135" class="label">Teaching Agent Core</text>
+
+  <rect x="380" y="175" width="180" height="90" class="subbox" />
+  <text x="425" y="210" class="label">Intent</text>
+  <text x="402" y="236" class="text">Instruction Routing</text>
+
+  <rect x="625" y="175" width="180" height="90" class="subbox" />
+  <text x="685" y="210" class="label">LLM</text>
+  <text x="655" y="236" class="text">Response Generation</text>
+
+  <rect x="380" y="315" width="180" height="90" class="subbox" />
+  <text x="438" y="350" class="label">RAG</text>
+  <text x="405" y="376" class="text">Knowledge Retrieval</text>
+
+  <rect x="625" y="315" width="180" height="90" class="subbox" />
+  <text x="665" y="350" class="label">Evaluator</text>
+  <text x="642" y="376" class="text">Teaching Feedback</text>
+
+  <rect x="380" y="455" width="425" height="100" class="subbox" />
+  <text x="500" y="490" class="label">Knowledge Base (txt / xlsx)</text>
+  <text x="458" y="516" class="text">Taiji routines, standards, teaching notes</text>
+
+  <rect x="930" y="120" width="220" height="90" class="box" />
+  <text x="980" y="155" class="label">CLI / Web UI</text>
+  <text x="968" y="182" class="text">Interactive Experience</text>
+
+  <rect x="930" y="300" width="220" height="90" class="box" />
+  <text x="983" y="335" class="label">Answer Output</text>
+  <text x="962" y="362" class="text">Guidance and Explanation</text>
+
+  <line x1="270" y1="165" x2="340" y2="165" class="arrow" />
+  <line x1="560" y1="220" x2="625" y2="220" class="arrow" />
+  <line x1="470" y1="265" x2="470" y2="315" class="arrow" />
+  <line x1="715" y1="265" x2="715" y2="315" class="arrow" />
+  <line x1="470" y1="405" x2="470" y2="455" class="arrow" />
+  <line x1="1040" y1="210" x2="1040" y2="300" class="arrow" />
+  <line x1="805" y1="220" x2="930" y2="165" class="arrow" />
+  <line x1="805" y1="360" x2="930" y2="345" class="arrow" />
+
+  <text x="40" y="660" class="text">This diagram presents the high-level architecture for classroom-facing martial arts teaching support.</text>
+</svg>
