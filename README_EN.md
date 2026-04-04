@@ -56,7 +56,7 @@ graph TD
 
 ## Classroom Demo Flow Figure
 
-![Classroom demo flow](docs/figures/classroom_demo_flow.svg)
+![Classroom demo flow](docs/figures/classroom_demo_flow_en.svg)
 
 ## Getting Started
 

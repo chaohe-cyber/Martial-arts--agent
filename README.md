@@ -54,7 +54,7 @@ graph TD
 
 ## 课堂演示流程图
 
-![武术智能体课堂演示流程](docs/figures/classroom_demo_flow.svg)
+![武术智能体课堂演示流程](docs/figures/classroom_demo_flow_zh.svg)
 
 ## 目录结构
 
