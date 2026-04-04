@@ -1,6 +1,8 @@
 # 武术教学智能体 Martial Arts Teaching Agent
 
-融合领域知识与大语言模型的武术教学智能体，面向传统体育教学、课程辅导和教学研究场景。
+[中文说明](README.md) | [English](README_EN.md)
+
+面向传统体育教学与研究场景的武术教学系统，融合武术领域知识检索与对话交互能力。
 
 项目目标：
 
@@ -8,10 +10,10 @@
 - 用本地模型降低成本并保护数据隐私。
 - 用 Web 界面降低使用门槛，支持课堂演示与公开体验。
 
-## 亮点
+## 项目特点
 
 - 领域知识增强：支持 txt 与 xlsx 资料入库检索。
-- 本地免费推理：支持 Ollama，本地可运行。
+- 本地推理部署：支持 Ollama，降低外部依赖。
 - 双入口使用：CLI 和 Streamlit Web 均可用。
 - 可扩展架构：已预留动作评估与研究评估模块扩展位。
 
@@ -60,7 +62,7 @@ ollama pull nomic-embed-text
 ### 3. 启动命令行模式
 
 ```bash
-python src/main.py
+./scripts/run_cli.sh
 ```
 
 首次建议输入 index 建立索引，随后再提问。
@@ -68,7 +70,13 @@ python src/main.py
 ### 4. 启动 Web 演示界面
 
 ```bash
-streamlit run src/interface/app.py
+./scripts/run_web.sh
+```
+
+### 5. 环境健康检查
+
+```bash
+./scripts/health_check.sh
 ```
 
 ## 面向公开演示
@@ -81,6 +89,8 @@ streamlit run src/interface/app.py
 - 贡献指南：[CONTRIBUTING.md](CONTRIBUTING.md)
 - 大文件建议：[docs/LARGE_FILES.md](docs/LARGE_FILES.md)
 - GitHub 发布流程：[docs/GITHUB_RELEASE_GUIDE.md](docs/GITHUB_RELEASE_GUIDE.md)
+- Issue 模板：[.github/ISSUE_TEMPLATE](.github/ISSUE_TEMPLATE)
+- PR 模板：[.github/pull_request_template.md](.github/pull_request_template.md)
 
 ## 当前路线图
 

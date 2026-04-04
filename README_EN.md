@@ -1,58 +1,70 @@
-# Martial Arts Teaching Agent (武术教学智能体)
+# Martial Arts Teaching Agent
 
-An AI-powered martial arts teaching assistant that combines Large Language Models (LLM) with domain-specific knowledge (RAG).
-This project corresponds to the research: *"Generative AI in Traditional Martial Arts Teaching: Development and Effectiveness Evaluation"*.
+[中文说明](README.md) | [English](README_EN.md)
 
-## Features
+A retrieval-enhanced teaching assistant for traditional martial arts education.
 
-- **Domain Knowledge Integration (RAG)**: Retrieves accurate martial arts theory from books/Excel files.
-- **Local LLM Support**: Runs completely offline using Ollama (Qwen2.5) for privacy and cost-efficiency.
-- **Multi-modal Interaction**: Supports text Q&A and basic motion analysis concepts.
-- **Web Interface**: User-friendly Streamlit UI.
+## Highlights
+
+- Domain knowledge retrieval over txt/xlsx teaching materials
+- Local model support with Ollama
+- CLI and Web entry points for classroom and demo use
+- Extensible structure for evaluation and motion-analysis modules
 
 ## Getting Started
 
 ### Prerequisites
 
 - Python 3.8+
-- [Ollama](https://ollama.com) installed
+- [Ollama](https://ollama.com)
 
-### Installation
+### Install Dependencies
 
-1.  Clone the repository:
-    ```bash
-    git clone https://github.com/YOUR_USERNAME/martial-arts-agent.git
-    cd martial-arts-agent
-    ```
-
-2.  Install dependences:
-    ```bash
-    pip install -r requirements.txt
-    ```
-
-3.  Download AI Models (Free):
-    ```bash
-    ollama pull qwen2.5:1.5b
-    ollama pull nomic-embed-text
-    ```
-
-### Usage
-
-**CLI Mode:**
 ```bash
-python src/main.py
+pip install -r requirements.txt
 ```
 
-**Web Interface:**
+### Pull Local Models
+
 ```bash
-streamlit run src/interface/app.py
+ollama pull qwen2.5:1.5b
+ollama pull nomic-embed-text
 ```
 
-## Structure
+### Run CLI
 
-- `src/`: Source code for agent and RAG logic.
-- `data/knowledge_base/`: Place your martial arts documents here (txt, xlsx).
+```bash
+./scripts/run_cli.sh
+```
+
+### Run Web UI
+
+```bash
+./scripts/run_web.sh
+```
+
+### Health Check
+
+```bash
+./scripts/health_check.sh
+```
+
+## Repository Structure
+
+- src: core logic
+- data/knowledge_base: source teaching materials
+- docs: project documentation
+- scripts: utility scripts
+- tests: test placeholders
+
+## Open Source Workflow
+
+- Contributing guide: [CONTRIBUTING.md](CONTRIBUTING.md)
+- Large file strategy: [docs/LARGE_FILES.md](docs/LARGE_FILES.md)
+- GitHub release steps: [docs/GITHUB_RELEASE_GUIDE.md](docs/GITHUB_RELEASE_GUIDE.md)
+- Issue templates: [.github/ISSUE_TEMPLATE](.github/ISSUE_TEMPLATE)
+- PR template: [.github/pull_request_template.md](.github/pull_request_template.md)
 
 ## License
 
-MIT
+MIT License. See [LICENSE](LICENSE).
