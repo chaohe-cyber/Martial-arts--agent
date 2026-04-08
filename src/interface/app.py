@@ -75,6 +75,12 @@ PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../')
 KB_PATH = os.path.join(PROJECT_ROOT, 'data', 'knowledge_base')
 CHROMA_PATH = os.path.join(PROJECT_ROOT, 'data', 'chroma_db')
 ICON_PATH = os.path.join(PROJECT_ROOT, 'src', 'interface', 'assets', 'wushu_agent_icon.png')
+DEPLOY_COMMIT = (
+    os.getenv("RAILWAY_GIT_COMMIT_SHA")
+    or os.getenv("GIT_COMMIT_SHA")
+    or os.getenv("SOURCE_VERSION")
+    or "local"
+)
 
 st.set_page_config(
     page_title="武术智能体",
@@ -255,7 +261,10 @@ if "analytics" not in st.session_state:
     st.session_state.analytics = []
 
 if "kb_status" not in st.session_state:
-    st.session_state.kb_status = "未初始化"
+    if os.path.exists(CHROMA_PATH) and os.listdir(CHROMA_PATH):
+        st.session_state.kb_status = "可用(已检测到现有索引)"
+    else:
+        st.session_state.kb_status = "未初始化"
 
 if "last_answer" not in st.session_state:
     st.session_state.last_answer = ""
@@ -284,6 +293,26 @@ def count_knowledge_files(path):
             elif low.endswith('.xlsx'):
                 xlsx_count += 1
     return txt_count, xlsx_count
+
+
+def build_runtime_health_report():
+    agent_obj = st.session_state.get("agent")
+    kb_ready = os.path.exists(CHROMA_PATH) and bool(os.listdir(CHROMA_PATH)) if os.path.exists(CHROMA_PATH) else False
+    has_kb_docs = os.path.exists(KB_PATH) and any(
+        name.lower().endswith((".txt", ".xlsx"))
+        for _, _, files in os.walk(KB_PATH)
+        for name in files
+    )
+
+    return {
+        "部署版本": f"{DEPLOY_COMMIT[:7]}" if DEPLOY_COMMIT != "local" else "local",
+        "智能体后端": getattr(agent_obj, "backend_name", "降级模式") if agent_obj is not None else "降级模式",
+        "知识库文件": "正常" if has_kb_docs else "缺失",
+        "向量索引": "正常" if kb_ready else "未建立",
+        "语音播报(TTS)": "正常" if TTS_READY else f"异常: {TTS_ERROR}",
+        "语音识别(STT)": "正常" if SPEECH_READY else "缺少依赖",
+        "摄像头检测": "正常" if CAMERA_READY else f"受限: {CAMERA_ERROR or '依赖不完整'}",
+    }
 
 
 def add_analytics_row(mode, prompt, response, has_context, latency_s):
@@ -958,6 +987,7 @@ with st.sidebar:
     if st.session_state.get("agent") is not None:
         agent_backend = getattr(st.session_state.agent, "backend_name", "未知后端")
     st.caption(f"Backend: {agent_backend}")
+    st.caption(f"Deploy: {DEPLOY_COMMIT[:7] if DEPLOY_COMMIT != 'local' else 'local'}")
     st.caption(f"多模态接口状态: {multimodal_model}")
 
 tabs = st.tabs(["智能问答", "多模态接口", "数字人互动", "系统状态", "教学工具箱"])
@@ -1489,7 +1519,24 @@ with tabs[3]:
     with s2:
         st.metric("向量库目录", "存在" if os.path.exists(CHROMA_PATH) else "未生成")
     with s3:
-        st.metric("智能体初始化", "正常" if "agent" in st.session_state else "异常")
+        st.metric("智能体初始化", "正常" if st.session_state.get("agent") is not None else "降级模式")
+
+    st.markdown("#### 云端功能自检")
+    health = build_runtime_health_report()
+    h1, h2 = st.columns(2)
+    with h1:
+        st.metric("部署版本", health["部署版本"])
+        st.metric("智能体后端", health["智能体后端"])
+        st.metric("向量索引", health["向量索引"])
+    with h2:
+        st.metric("语音播报(TTS)", "正常" if health["语音播报(TTS)"] == "正常" else "异常")
+        st.metric("语音识别(STT)", "正常" if health["语音识别(STT)"] == "正常" else "受限")
+        st.metric("摄像头检测", "正常" if health["摄像头检测"] == "正常" else "受限")
+
+    st.dataframe(
+        pd.DataFrame([{"项目": k, "状态": v} for k, v in health.items()]),
+        width="stretch",
+    )
 
     st.markdown('<div class="glass"><h4>课堂部署建议</h4><div class="soft">1. 课前先点击“重新索引/加载知识库”。 2. 演示时优先使用快捷提问按钮。 3. 先在智能问答中生成真实回答，再使用数字人播报。</div></div>', unsafe_allow_html=True)
 
