@@ -236,8 +236,11 @@ st.markdown(
 if "agent" not in st.session_state:
     try:
         st.session_state.agent = MartialArtsAgent()
+        st.session_state.agent_last_error = ""
     except Exception as e:
-        st.error(f"智能体初始化失败 (可能是 Ollama 未运行): {e}")
+        st.session_state.agent = None
+        st.session_state.agent_last_error = str(e)
+        st.warning(f"智能体初始化失败，已切换为降级模式：{e}")
 
 if "kb" not in st.session_state:
     st.session_state.kb = KnowledgeBase()
@@ -400,18 +403,53 @@ def polish_speech_script(text: str, role_label: str) -> str:
     if not cleaned:
         return ""
 
-    if "agent" not in st.session_state:
-        return cleaned
-
     prompt = (
         f"请把下面内容改写成适合{role_label}口播的中文讲解稿，要求更自然、更专业、更适合现场播报，"
         f"保留核心信息，不要虚构事实，不要增加原文没有的内容，控制在原文长度的80%到120%。\n\n"
         f"原文：{cleaned}"
     )
-    try:
-        return st.session_state.agent.generate_response(prompt).strip()
-    except Exception:
-        return cleaned
+    refined = safe_generate_response(prompt)
+    return refined.strip() if refined else cleaned
+
+
+def _extract_context_snippet(context: str, limit: int = 420) -> str:
+    snippet = (context or "").strip().replace("\n", " ")
+    if not snippet:
+        return ""
+    return snippet[:limit] + ("..." if len(snippet) > limit else "")
+
+
+def safe_generate_response(prompt: str, context: str = "") -> str:
+    agent = st.session_state.get("agent")
+    if agent is not None:
+        try:
+            return agent.generate_response(prompt, context=context or "")
+        except Exception as e:
+            st.session_state.agent_last_error = str(e)
+
+    kb_context = context
+    if not kb_context:
+        try:
+            kb_context = st.session_state.kb.retrieve(prompt)
+        except Exception:
+            kb_context = ""
+
+    ctx = _extract_context_snippet(kb_context)
+    if ctx:
+        return (
+            "当前已切换到降级回答模式（云端未连接本地模型）。\n\n"
+            "1. 核心结论\n"
+            "基于已检索到的知识库内容，建议按“动作要点 - 常见错误 - 纠正练习”三步组织教学。\n\n"
+            "2. 参考材料摘录\n"
+            f"{ctx}\n\n"
+            "3. 课堂建议\n"
+            "先分解示范，再节奏串联，最后进行个别纠错与安全提醒。"
+        )
+
+    return (
+        "当前已切换到降级回答模式（云端未连接本地模型，且未检索到可用知识片段）。\n"
+        "建议先在“知识库管理”中重新索引资料，或为云端服务配置可用的大模型接口后再生成高质量回答。"
+    )
 
 
 def infer_action_sequence(text: str):
@@ -955,7 +993,7 @@ with tabs[0]:
         with st.chat_message("user"):
             st.markdown(prompt)
 
-        if "agent" in st.session_state:
+        if st.session_state.get("agent") is not None:
             with st.chat_message("assistant"):
                 message_placeholder = st.empty()
                 full_response = ""
@@ -1024,10 +1062,31 @@ with tabs[0]:
                     )
 
                 except Exception as e:
-                    st.error(f"生成回答时发生错误: {str(e)}")
-                    st.info("请检查 Ollama 服务是否正在运行 (sudo systemctl status ollama)")
+                    fallback = safe_generate_response(prompt, context)
+                    message_placeholder.markdown(fallback)
+                    st.session_state.messages.append({"role": "assistant", "content": fallback})
+                    st.session_state.last_answer = fallback
+                    st.session_state.digital_human_draft = fallback
+                    add_analytics_row(
+                        mode=mode,
+                        prompt=prompt,
+                        response=fallback,
+                        has_context=bool(context),
+                        latency_s=time.time() - start_time,
+                    )
+                    st.warning(f"模型流式输出失败，已自动使用降级回答：{str(e)}")
         else:
-            st.error("智能体未正确初始化，请刷新页面重试。")
+            context = ""
+            try:
+                context = st.session_state.kb.retrieve(prompt)
+            except Exception:
+                context = ""
+            fallback = safe_generate_response(prompt, context)
+            with st.chat_message("assistant"):
+                st.markdown(fallback)
+            st.session_state.messages.append({"role": "assistant", "content": fallback})
+            st.session_state.last_answer = fallback
+            st.session_state.digital_human_draft = fallback
 
 with tabs[1]:
     st.markdown("### 🎥 多模态分析接口")
@@ -1302,14 +1361,11 @@ with tabs[1]:
                         f"素材信息: {file_desc}。"
                         "请按以下格式输出: 1) 观察要点 2) 主要问题 3) 训练建议 4) 风险提示。"
                     )
-                    try:
-                        result = st.session_state.agent.generate_response(analysis_prompt)
-                        st.success("多模态分析建议已生成")
-                        st.markdown(result)
-                        st.session_state.last_answer = result
-                        st.session_state.digital_human_draft = result
-                    except Exception as e:
-                        st.error(f"分析失败: {e}")
+                    result = safe_generate_response(analysis_prompt)
+                    st.success("多模态分析建议已生成")
+                    st.markdown(result)
+                    st.session_state.last_answer = result
+                    st.session_state.digital_human_draft = result
 
 with tabs[2]:
     st.markdown("### 🧑‍🏫 数字人互动")
@@ -1455,22 +1511,16 @@ with tabs[4]:
         lesson_constraints = st.text_area("约束条件", "例如：场地有限、人数较多、需兼顾安全与趣味性。")
 
         if st.button("📝 生成课程计划", type="primary"):
-            if "agent" not in st.session_state:
-                st.error("武术智能体未初始化，无法生成课程计划。")
-            else:
-                plan_prompt = (
-                    f"请生成一份结构化武术课程计划。"
-                    f"武术类别: {lesson_style}; 学员水平: {lesson_level}; 课时长度: {lesson_duration};"
-                    f"教学目标: {lesson_goal}; 约束条件: {lesson_constraints}。"
-                    "输出格式必须包含：1. 教学目标 2. 时间分配表 3. 教学流程 4. 纠错要点 5. 安全提示 6. 课后作业。"
-                )
-                with st.spinner("正在生成课程计划..."):
-                    try:
-                        plan = st.session_state.agent.generate_response(plan_prompt)
-                        st.success("课程计划生成完成")
-                        st.markdown(plan)
-                    except Exception as e:
-                        st.error(f"生成失败: {e}")
+            plan_prompt = (
+                f"请生成一份结构化武术课程计划。"
+                f"武术类别: {lesson_style}; 学员水平: {lesson_level}; 课时长度: {lesson_duration};"
+                f"教学目标: {lesson_goal}; 约束条件: {lesson_constraints}。"
+                "输出格式必须包含：1. 教学目标 2. 时间分配表 3. 教学流程 4. 纠错要点 5. 安全提示 6. 课后作业。"
+            )
+            with st.spinner("正在生成课程计划..."):
+                plan = safe_generate_response(plan_prompt)
+                st.success("课程计划生成完成")
+                st.markdown(plan)
 
     with toolbox_tabs[1]:
         st.markdown("#### 教学评估打分")

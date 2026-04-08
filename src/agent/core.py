@@ -1,25 +1,8 @@
 import os
-try:
-    from langchain_openai import ChatOpenAI
-    from langchain_ollama import ChatOllama
-except ImportError:
-    import subprocess
-    print("Trying to install missing dependencies (langchain-openai, langchain-ollama)...")
-    subprocess.check_call(["pip", "install", "langchain-openai", "langchain-ollama"])
-    from langchain_openai import ChatOpenAI
-    from langchain_ollama import ChatOllama
-
-try:
-    from langchain.prompts import ChatPromptTemplate
-    from langchain_core.prompts import ChatPromptTemplate
-except ImportError:
-    from langchain_core.prompts import ChatPromptTemplate
-
-try:
-    from langchain.schema.output_parser import StrOutputParser
-    from langchain_core.output_parsers import StrOutputParser
-except ImportError:
-    from langchain_core.output_parsers import StrOutputParser
+from langchain_openai import ChatOpenAI
+from langchain_ollama import ChatOllama
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.output_parsers import StrOutputParser
 
 # 简单的武术智能体类
 class MartialArtsAgent:
@@ -38,15 +21,6 @@ class MartialArtsAgent:
             print(f"Using Local Ollama Model: {local_model}")
             # Ollama 不需要 API Key
             self.llm = ChatOllama(model=local_model, temperature=temperature)
-            
-            # 检查 Ollama 服务是否可用
-            try:
-                # 简单测试一下
-                self.llm.invoke("Hi")
-            except Exception as e:
-                print(f"⚠️  警告: 无法连接本地 Ollama 服务。错误信息: {e}")
-                print("💡 请确保已安装并启动 Ollama，且已拉取模型: ollama pull qwen2.5:7b")
-                # 不抛出异常，允许后续尝试 (可能只是服务没起)
 
         self.output_parser = StrOutputParser()
         
