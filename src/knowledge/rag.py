@@ -2,12 +2,12 @@ import os
 try:
     from langchain_text_splitters import RecursiveCharacterTextSplitter
 except ImportError:
-    from langchain.text_splitter import RecursiveCharacterTextSplitter
+    from langchain.text_splitter import RecursiveCharacterTextSplitter  # type: ignore[reportMissingImports]
 
 try:
     from langchain_community.document_loaders import TextLoader, DirectoryLoader
 except ImportError:
-    from langchain.document_loaders import TextLoader, DirectoryLoader
+    from langchain.document_loaders import TextLoader, DirectoryLoader  # type: ignore[reportMissingImports]
 from langchain_openai import OpenAIEmbeddings
 from langchain_ollama import OllamaEmbeddings
 try:
@@ -17,26 +17,35 @@ except ImportError:
 try:
     from langchain_core.documents import Document
 except ImportError:
-    from langchain.schema import Document
+    from langchain.schema import Document  # type: ignore[reportMissingImports]
 
 class KnowledgeBase:
     def __init__(self, persist_directory="./data/chroma_db"):
         self.persist_directory = persist_directory
         self.vector_store = None
+        self.embedding_backend_name = "unknown"
 
-        # 同样，自动检测 Embeddings 模型
-        api_key = os.getenv("OPENAI_API_KEY")
-        
-        if api_key and api_key.startswith("sk-") and "ollama" not in api_key.lower():
-            print("Using OpenAI Embeddings")
-            self.embeddings = OpenAIEmbeddings()
+        # 云端优先使用 OPENAI 兼容 embedding；无 Key 时回退 Ollama。
+        api_key = (os.getenv("OPENAI_API_KEY") or "").strip()
+        base_url = (os.getenv("OPENAI_BASE_URL") or "").strip() or None
+        embedding_model = (os.getenv("OPENAI_EMBEDDING_MODEL") or "").strip() or "text-embedding-3-small"
+
+        if api_key:
+            kwargs = {
+                "model": embedding_model,
+                "api_key": api_key,
+            }
+            if base_url:
+                kwargs["base_url"] = base_url
+            print(f"Using OpenAI-Compatible Embeddings: {embedding_model}")
+            self.embeddings = OpenAIEmbeddings(**kwargs)
+            self.embedding_backend_name = f"OpenAI-Compatible ({embedding_model})"
         else:
-            # 使用本地模型
-            # 推荐: nomic-embed-text (专门为 embedding 训练，轻量 137MB)
-            # 或者直接用 qwen2.5:7b 用于 Embeddings (虽非最佳，但只需下载一个模型)
-            embedding_model = "nomic-embed-text"
-            print(f"Using Ollama Embeddings: {embedding_model}")
-            self.embeddings = OllamaEmbeddings(model=embedding_model)
+            ollama_embedding_model = (os.getenv("OLLAMA_EMBEDDING_MODEL") or "").strip() or "nomic-embed-text"
+            ollama_base_url = (os.getenv("OLLAMA_BASE_URL") or "").strip() or "http://127.0.0.1:11434"
+            print(f"Using Ollama Embeddings: {ollama_embedding_model}")
+            self.embeddings = OllamaEmbeddings(model=ollama_embedding_model, base_url=ollama_base_url)
+            self.embedding_backend_name = f"Ollama ({ollama_embedding_model})"
 
     def load_documents(self, doc_path):
         """

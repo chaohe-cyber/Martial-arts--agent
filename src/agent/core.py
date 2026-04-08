@@ -6,21 +6,32 @@ from langchain_core.output_parsers import StrOutputParser
 
 # 简单的武术智能体类
 class MartialArtsAgent:
-    def __init__(self, model_name="gpt-3.5-turbo", temperature=0.7):
-        # 检查是否使用 OpenAI
-        api_key = os.getenv("OPENAI_API_KEY")
-        if api_key and api_key.startswith("sk-") and "ollama" not in api_key.lower():
-            # 使用 OpenAI
-            self.llm = ChatOpenAI(model_name=model_name, temperature=temperature)
-            print(f"Using OpenAI Model: {model_name}")
+    def __init__(self, model_name="gpt-4o-mini", temperature=0.7):
+        self.backend_name = "unknown"
+
+        # 云端部署优先使用 OPENAI 兼容接口；本地无 Key 时回退到 Ollama。
+        # 兼容大多数平台: OpenAI、Azure(OpenAI 兼容网关)、硅基流动等。
+        api_key = (os.getenv("OPENAI_API_KEY") or "").strip()
+        base_url = (os.getenv("OPENAI_BASE_URL") or "").strip() or None
+        preferred_model = (os.getenv("OPENAI_MODEL") or "").strip() or model_name
+
+        if api_key:
+            kwargs = {
+                "model": preferred_model,
+                "temperature": temperature,
+                "api_key": api_key,
+            }
+            if base_url:
+                kwargs["base_url"] = base_url
+            self.llm = ChatOpenAI(**kwargs)
+            self.backend_name = f"OpenAI-Compatible ({preferred_model})"
+            print(f"Using cloud LLM: {preferred_model}")
         else:
-            # 默认使用本地 Ollama (免费)
-            # 推荐模型: qwen2.5:7b (效果好) -> qwen2.5:1.5b (速度快)
-            # 为了提高速度，默认切换为 1.5b 版本。如果需要更高质量，可改回 7b
-            local_model = "qwen2.5:1.5b" 
-            print(f"Using Local Ollama Model: {local_model}")
-            # Ollama 不需要 API Key
-            self.llm = ChatOllama(model=local_model, temperature=temperature)
+            local_model = (os.getenv("OLLAMA_MODEL") or "").strip() or "qwen2.5:1.5b"
+            ollama_base_url = (os.getenv("OLLAMA_BASE_URL") or "").strip() or "http://127.0.0.1:11434"
+            self.llm = ChatOllama(model=local_model, temperature=temperature, base_url=ollama_base_url)
+            self.backend_name = f"Ollama ({local_model})"
+            print(f"Using local Ollama model: {local_model}")
 
         self.output_parser = StrOutputParser()
         

@@ -49,7 +49,21 @@ docker-compose down
 3. **配置环境变量（如需）**
    - 在 Railway Dashboard 中进入项目
    - 点击 Settings → Variables
-   - 添加所需的环境变量
+   - 建议至少添加以下变量（确保云端功能完整可用）：
+
+   ```bash
+   OPENAI_API_KEY=你的云端模型API密钥
+   OPENAI_BASE_URL=你的OpenAI兼容网关地址(可选)
+   OPENAI_MODEL=gpt-4o-mini
+   OPENAI_EMBEDDING_MODEL=text-embedding-3-small
+   ```
+
+   - 若你使用本地/自建 Ollama 服务，可改用：
+   ```bash
+   OLLAMA_BASE_URL=http://你的ollama服务地址:11434
+   OLLAMA_MODEL=qwen2.5:1.5b
+   OLLAMA_EMBEDDING_MODEL=nomic-embed-text
+   ```
 
 4. **获取公网链接**
    - 部署完成后，Railway 会自动分配一个公网域名

@@ -948,7 +948,10 @@ with st.sidebar:
         st.success("已清空当前对话。")
     
     st.divider()
-    st.caption("Backend: Ollama(Local) | LLM: qwen2.5:1.5b")
+    agent_backend = "未初始化"
+    if st.session_state.get("agent") is not None:
+        agent_backend = getattr(st.session_state.agent, "backend_name", "未知后端")
+    st.caption(f"Backend: {agent_backend}")
     st.caption(f"多模态接口状态: {multimodal_model}")
 
 tabs = st.tabs(["智能问答", "多模态接口", "数字人互动", "系统状态", "教学工具箱"])
