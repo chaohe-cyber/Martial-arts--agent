@@ -1,4 +1,6 @@
 import os
+import re
+from pathlib import Path
 try:
     from langchain_text_splitters import RecursiveCharacterTextSplitter
 except ImportError:
@@ -53,6 +55,9 @@ class KnowledgeBase:
         """
         if not os.path.exists(doc_path):
             raise FileNotFoundError(f"路径 {doc_path} 不存在")
+
+        # 记录最近一次成功加载的知识库路径，供降级检索使用
+        self.last_doc_path = doc_path
 
         documents = []
         txt_files = 0
@@ -116,16 +121,97 @@ class KnowledgeBase:
                     self.vector_store = Chroma(persist_directory=self.persist_directory, embedding_function=self.embeddings)
                 except Exception as e:
                     print(f"加载向量数据库失败: {e}")
-                    return ""
+                    return self._lexical_retrieve(query, k=k)
             else:
-                return "" # 返回空字符串，表示没有检索到外部知识
+                return self._lexical_retrieve(query, k=k)
 
         try:
             docs = self.vector_store.similarity_search(query, k=k)
             return "\n\n".join([doc.page_content for doc in docs])
         except Exception as e:
             print(f"检索失败: {e}")
+            return self._lexical_retrieve(query, k=k)
+
+    def _resolve_doc_roots(self):
+        roots = []
+        if hasattr(self, "last_doc_path") and self.last_doc_path:
+            roots.append(Path(self.last_doc_path))
+        roots.extend([
+            Path("./data/knowledge_base"),
+            Path("/app/data/knowledge_base"),
+        ])
+        unique = []
+        seen = set()
+        for r in roots:
+            key = str(r.resolve()) if r.exists() else str(r)
+            if key not in seen:
+                seen.add(key)
+                unique.append(r)
+        return unique
+
+    def _tokenize_query(self, query: str):
+        q = (query or "").strip().lower()
+        zh_tokens = re.findall(r"[\u4e00-\u9fff]{2,}", q)
+        en_tokens = re.findall(r"[a-zA-Z0-9_]{2,}", q)
+        return list(dict.fromkeys(zh_tokens + en_tokens))
+
+    def _score_text(self, text: str, tokens):
+        if not text or not tokens:
+            return 0
+        low = text.lower()
+        score = 0
+        for t in tokens:
+            if t in low:
+                score += 1
+        return score
+
+    def _lexical_retrieve(self, query, k=3):
+        tokens = self._tokenize_query(query)
+        if not tokens:
             return ""
+
+        candidates = []
+        roots = self._resolve_doc_roots()
+
+        for root in roots:
+            if not root.exists():
+                continue
+
+            # txt 检索
+            for f in root.rglob("*.txt"):
+                try:
+                    content = f.read_text(encoding="utf-8", errors="ignore")
+                except Exception:
+                    continue
+                score = self._score_text(content, tokens)
+                if score > 0:
+                    snippet = content[:900].replace("\n", " ").strip()
+                    candidates.append((score, f"[source:{f.name}] {snippet}"))
+
+            # xlsx 检索
+            for f in root.rglob("*.xlsx"):
+                try:
+                    import pandas as pd
+
+                    df = pd.read_excel(f)
+                except Exception:
+                    continue
+                row_hits = []
+                for _, row in df.head(120).iterrows():
+                    line = " ".join([f"{col}: {str(val)}" for col, val in row.items() if pd.notna(val)])
+                    score = self._score_text(line, tokens)
+                    if score > 0:
+                        row_hits.append((score, line))
+                if row_hits:
+                    row_hits.sort(key=lambda x: x[0], reverse=True)
+                    merged = "；".join([x[1] for x in row_hits[:3]])[:900]
+                    candidates.append((row_hits[0][0], f"[source:{f.name}] {merged}"))
+
+        if not candidates:
+            return ""
+
+        candidates.sort(key=lambda x: x[0], reverse=True)
+        return "\n\n".join([text for _, text in candidates[: max(1, k)]])
 
 # 示例用法 (仅供测试)
 if __name__ == "__main__":

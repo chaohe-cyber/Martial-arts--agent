@@ -434,6 +434,12 @@ def safe_generate_response(prompt: str, context: str = "") -> str:
         except Exception:
             kb_context = ""
 
+    if not kb_context:
+        try:
+            kb_context = st.session_state.kb._lexical_retrieve(prompt, k=3)
+        except Exception:
+            kb_context = ""
+
     ctx = _extract_context_snippet(kb_context)
     if ctx:
         return (
