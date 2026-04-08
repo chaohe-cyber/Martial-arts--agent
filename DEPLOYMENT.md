@@ -56,6 +56,10 @@ docker-compose down
    - 格式：`https://your-project-name.railway.app`
    - 这个链接可以稳定使用，无需额外续费
 
+5. **端口说明（重要）**
+   - Railway 会自动注入 `PORT` 环境变量
+   - 本项目 Docker 启动命令已适配：优先监听 `PORT`，本地回退 `8501`
+
 ---
 
 ### 方案 3: Heroku 部署
@@ -161,6 +165,19 @@ ports:
 # 查看实时日志
 docker-compose logs -f martial-arts-agent
 ```
+
+### Railway 部署失败（常见）
+1. **Healthcheck Failed / Service Unavailable**
+   - 原因：应用没有监听 Railway 分配的 `PORT`
+   - 处理：确认使用最新 Dockerfile（已支持 `--server.port=${PORT:-8501}`）
+
+2. **Build Failed（依赖下载超时）**
+   - 处理：在 Railway 里点击 `Redeploy` 重试
+   - 若多次失败，可在低峰时段重试，或改为先本地构建验证
+
+3. **部署成功但页面打不开**
+   - 处理：确认 Service 已分配 Public Domain
+   - 处理：查看 Deploy Logs，确认出现 `Network URL` / `Server started`
 
 ---
 

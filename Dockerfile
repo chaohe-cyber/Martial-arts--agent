@@ -22,13 +22,6 @@ RUN mkdir -p /app/data/chroma_db /app/data/knowledge_base
 # 暴露端口 8501（Streamlit 默认端口）
 EXPOSE 8501
 
-# 设置 Streamlit 配置
-RUN mkdir -p ~/.streamlit && \
-    echo "[server]\n\
-headless = true\n\
-port = 8501\n\
-enableCORS = false\n\
-maxMessageSize = 200" > ~/.streamlit/config.toml
-
 # 启动 Streamlit 应用
-CMD ["streamlit", "run", "src/interface/app.py", "--server.address=0.0.0.0", "--server.port=8501"]
+# Railway 会注入 PORT，若本地运行则回退到 8501。
+CMD ["sh", "-c", "streamlit run src/interface/app.py --server.address=0.0.0.0 --server.port=${PORT:-8501} --server.headless=true --server.enableCORS=false --server.maxMessageSize=200"]
