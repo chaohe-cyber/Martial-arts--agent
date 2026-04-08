@@ -1,9 +1,8 @@
 import os
 try:
-    from langchain.text_splitter import RecursiveCharacterTextSplitter
     from langchain_text_splitters import RecursiveCharacterTextSplitter
 except ImportError:
-    from langchain_text_splitters import RecursiveCharacterTextSplitter
+    from langchain.text_splitter import RecursiveCharacterTextSplitter
 
 try:
     from langchain_community.document_loaders import TextLoader, DirectoryLoader
@@ -11,7 +10,14 @@ except ImportError:
     from langchain.document_loaders import TextLoader, DirectoryLoader
 from langchain_openai import OpenAIEmbeddings
 from langchain_ollama import OllamaEmbeddings
-from langchain_community.vectorstores import Chroma
+try:
+    from langchain_chroma import Chroma
+except ImportError:
+    from langchain_community.vectorstores import Chroma
+try:
+    from langchain_core.documents import Document
+except ImportError:
+    from langchain.schema import Document
 
 class KnowledgeBase:
     def __init__(self, persist_directory="./data/chroma_db"):
@@ -37,23 +43,23 @@ class KnowledgeBase:
         从指定目录加载文本文档（如武术拳谱、教材）
         """
         if not os.path.exists(doc_path):
-            print(f"路径 {doc_path} 不存在")
-            return
+            raise FileNotFoundError(f"路径 {doc_path} 不存在")
 
         documents = []
+        txt_files = 0
         
         # 1. 加载 txt 文件
         try:
             txt_loader = DirectoryLoader(doc_path, glob="**/*.txt", loader_cls=TextLoader)
-            documents.extend(txt_loader.load())
+            txt_docs = txt_loader.load()
+            documents.extend(txt_docs)
+            txt_files = len(txt_docs)
         except Exception as e:
             print(f"加载 txt 文件时出错: {e}")
 
         # 2. 加载 xlsx 文件 (使用 pandas)
         import glob
         import pandas as pd
-        from langchain.schema import Document
-        
         xlsx_files = glob.glob(os.path.join(doc_path, "**/*.xlsx"), recursive=True)
         for xlsx_file in xlsx_files:
             try:
@@ -69,8 +75,7 @@ class KnowledgeBase:
                 print(f"无法加载 {xlsx_file}: {e}")
 
         if not documents:
-            print("未找到任何文档。")
-            return
+            raise ValueError("未找到任何可索引文档（.txt/.xlsx）。")
 
         text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
         docs = text_splitter.split_documents(documents)
@@ -83,6 +88,13 @@ class KnowledgeBase:
         )
         self.vector_store.persist()
         print(f"成功加载并索引了 {len(docs)} 个文档片段。")
+        return {
+            "txt_files": txt_files,
+            "xlsx_files": len(xlsx_files),
+            "raw_documents": len(documents),
+            "chunks": len(docs),
+            "persist_directory": self.persist_directory,
+        }
 
     def retrieve(self, query, k=3):
         """

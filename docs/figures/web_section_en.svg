@@ -1,9 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720">
   <defs>
     <style>
-      .t { font: 700 32px Arial, sans-serif; fill: #102a45; }
-      .h { font: 700 18px Arial, sans-serif; fill: #173b5e; }
-      .m { font: 600 14px Arial, sans-serif; fill: #2b4d6d; }
+      .t { font: 700 32px "Noto Sans CJK SC", "WenQuanYi Zen Hei", "Droid Sans Fallback", sans-serif; fill: #102a45; }
+      .h { font: 700 18px "Noto Sans CJK SC", "WenQuanYi Zen Hei", "Droid Sans Fallback", sans-serif; fill: #173b5e; }
+      .m { font: 600 14px "Noto Sans CJK SC", "WenQuanYi Zen Hei", "Droid Sans Fallback", sans-serif; fill: #2b4d6d; }
       .frame { fill: #f6fbff; stroke: #2d628f; stroke-width: 2.2; rx: 16; ry: 16; }
       .panel { fill: #ffffff; stroke: #4e7ea7; stroke-width: 1.7; rx: 10; ry: 10; }
       .tag { fill: #e8f2fb; stroke: #4e7ea7; stroke-width: 1.5; rx: 8; ry: 8; }
@@ -25,7 +25,7 @@
   <rect x="370" y="190" width="740" height="130" class="tag" />
   <text x="395" y="225" class="h">User Input Area</text>
   <text x="395" y="252" class="m">Example: What are key points in Yang-style first segment?</text>
-  <text x="395" y="278" class="m">Supports iterative classroom Q&A</text>
+  <text x="395" y="278" class="m">Supports iterative classroom Q&amp;A</text>
 
   <rect x="370" y="340" width="740" height="185" class="tag" />
   <text x="395" y="375" class="h">Agent Response Area</text>

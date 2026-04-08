@@ -1,9 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="560" viewBox="0 0 1200 560">
   <defs>
     <style>
-      .t { font: 700 32px Arial, sans-serif; fill: #12314f; }
-      .h { font: 700 19px Arial, sans-serif; fill: #1f3d5a; }
-      .m { font: 600 15px Arial, sans-serif; fill: #2c4c6d; }
+      .t { font: 700 32px "Noto Sans CJK SC", "WenQuanYi Zen Hei", "Droid Sans Fallback", sans-serif; fill: #12314f; }
+      .h { font: 700 19px "Noto Sans CJK SC", "WenQuanYi Zen Hei", "Droid Sans Fallback", sans-serif; fill: #1f3d5a; }
+      .m { font: 600 15px "Noto Sans CJK SC", "WenQuanYi Zen Hei", "Droid Sans Fallback", sans-serif; fill: #2c4c6d; }
       .b { fill: #f7fbff; stroke: #2b5d8a; stroke-width: 2; rx: 14; ry: 14; }
       .a { stroke: #2b5d8a; stroke-width: 2.5; marker-end: url(#m2); fill: none; }
     </style>
@@ -11,8 +11,6 @@
       <path d="M0,0 L10,3 L0,6 z" fill="#2b5d8a" />
     </marker>
   </defs>
-
-  <text x="36" y="52" class="t">武术知识库处理流程</text>
 
   <rect x="40" y="130" width="180" height="95" class="b" />
   <text x="80" y="168" class="h">原始资料</text>
@@ -49,5 +47,4 @@
   <line x1="985" y1="225" x2="985" y2="320" class="a" />
   <line x1="730" y1="373" x2="680" y2="373" class="a" />
 
-  <text x="36" y="500" class="m">流程目标：让武术智能体回答时可引用可追溯，突出“武术知识库”与“教学规范一致性”。</text>
 </svg>

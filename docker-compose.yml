@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  martial-arts-agent:
+    build: .
+    container_name: martial-arts-agent
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./data:/app/data
+      - ./data/knowledge_base:/app/data/knowledge_base
+      - ./data/chroma_db:/app/data/chroma_db
+    environment:
+      - PYTHONUNBUFFERED=1
+      - STREAMLIT_SERVER_HEADLESS=true
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8501/_stcore/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s

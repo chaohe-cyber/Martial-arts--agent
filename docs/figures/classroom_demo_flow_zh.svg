@@ -1,10 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="520" viewBox="0 0 1200 520">
   <defs>
     <style>
-      .title { font: 700 30px Arial, sans-serif; fill: #12314f; }
-      .step { font: 700 18px Arial, sans-serif; fill: #ffffff; }
-      .label { font: 700 18px Arial, sans-serif; fill: #1f3d5a; }
-      .text { font: 600 14px Arial, sans-serif; fill: #2f4f6e; }
+      .title { font-size: 30px; font-weight: 700; font-family: "Noto Sans CJK SC", "WenQuanYi Zen Hei", "Droid Sans Fallback", sans-serif; fill: #12314f; }
+      .step { font-size: 18px; font-weight: 700; font-family: "Noto Sans CJK SC", "WenQuanYi Zen Hei", "Droid Sans Fallback", sans-serif; fill: #ffffff; }
+      .label { font-size: 18px; font-weight: 700; font-family: "Noto Sans CJK SC", "WenQuanYi Zen Hei", "Droid Sans Fallback", sans-serif; fill: #1f3d5a; }
+      .text { font-size: 14px; font-weight: 600; font-family: "Noto Sans CJK SC", "WenQuanYi Zen Hei", "Droid Sans Fallback", sans-serif; fill: #2f4f6e; }
       .bubble { fill: #2f6ea3; }
       .card { fill: #f7fbff; stroke: #2f6ea3; stroke-width: 2; rx: 14; ry: 14; }
       .arrow { stroke: #2f6ea3; stroke-width: 2.5; marker-end: url(#m); fill: none; }
@@ -13,8 +13,6 @@
       <path d="M0,0 L10,3 L0,6 z" fill="#2f6ea3" />
     </marker>
   </defs>
-
-  <text x="40" y="55" class="title">课堂演示流程</text>
 
   <circle cx="120" cy="170" r="32" class="bubble" />
   <text x="109" y="177" class="step">1</text>

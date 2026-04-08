@@ -1,9 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720">
   <defs>
     <style>
-      .t { font: 700 32px Arial, sans-serif; fill: #0f2a44; }
-      .h { font: 700 20px Arial, sans-serif; fill: #173b5e; }
-      .m { font: 600 16px Arial, sans-serif; fill: #224b71; }
+      .t { font: 700 32px "Noto Sans CJK SC", "WenQuanYi Zen Hei", "Droid Sans Fallback", sans-serif; fill: #0f2a44; }
+      .h { font: 700 20px "Noto Sans CJK SC", "WenQuanYi Zen Hei", "Droid Sans Fallback", sans-serif; fill: #173b5e; }
+      .m { font: 600 16px "Noto Sans CJK SC", "WenQuanYi Zen Hei", "Droid Sans Fallback", sans-serif; fill: #224b71; }
       .b { fill: #f3f8fe; stroke: #24527a; stroke-width: 2; rx: 14; ry: 14; }
       .s { fill: #ffffff; stroke: #4f7fa7; stroke-width: 1.8; rx: 10; ry: 10; }
       .a { stroke: #24527a; stroke-width: 2.5; marker-end: url(#m1); fill: none; }
@@ -13,11 +13,9 @@
     </marker>
   </defs>
 
-  <text x="36" y="54" class="t">武术智能体系统总览</text>
-
   <rect x="40" y="120" width="230" height="100" class="b" />
   <text x="95" y="160" class="h">教师 / 学生</text>
-  <text x="78" y="188" class="m">输入问题、动作描述、教学任务</text>
+  <text x="50" y="188" class="m">输入问题、动作描述、教学任务</text>
 
   <rect x="320" y="90" width="560" height="560" class="b" />
   <text x="525" y="128" class="h">武术智能体核心</text>

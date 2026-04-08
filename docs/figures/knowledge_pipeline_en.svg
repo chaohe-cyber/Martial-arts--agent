@@ -1,9 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="560" viewBox="0 0 1200 560">
   <defs>
     <style>
-      .t { font: 700 32px Arial, sans-serif; fill: #12314f; }
-      .h { font: 700 19px Arial, sans-serif; fill: #1f3d5a; }
-      .m { font: 600 15px Arial, sans-serif; fill: #2c4c6d; }
+      .t { font: 700 32px "Noto Sans CJK SC", "WenQuanYi Zen Hei", "Droid Sans Fallback", sans-serif; fill: #12314f; }
+      .h { font: 700 19px "Noto Sans CJK SC", "WenQuanYi Zen Hei", "Droid Sans Fallback", sans-serif; fill: #1f3d5a; }
+      .m { font: 600 15px "Noto Sans CJK SC", "WenQuanYi Zen Hei", "Droid Sans Fallback", sans-serif; fill: #2c4c6d; }
       .b { fill: #f7fbff; stroke: #2b5d8a; stroke-width: 2; rx: 14; ry: 14; }
       .a { stroke: #2b5d8a; stroke-width: 2.5; marker-end: url(#m2); fill: none; }
     </style>

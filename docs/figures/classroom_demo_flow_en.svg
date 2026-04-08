@@ -1,10 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="520" viewBox="0 0 1200 520">
   <defs>
     <style>
-      .title { font: 700 30px Arial, sans-serif; fill: #12314f; }
-      .step { font: 700 18px Arial, sans-serif; fill: #ffffff; }
-      .label { font: 600 16px Arial, sans-serif; fill: #1f3d5a; }
-      .text { font: 500 14px Arial, sans-serif; fill: #2f4f6e; }
+      .title { font: 700 30px "Noto Sans CJK SC", "WenQuanYi Zen Hei", "Droid Sans Fallback", sans-serif; fill: #12314f; }
+      .step { font: 700 18px "Noto Sans CJK SC", "WenQuanYi Zen Hei", "Droid Sans Fallback", sans-serif; fill: #ffffff; }
+      .label { font: 600 16px "Noto Sans CJK SC", "WenQuanYi Zen Hei", "Droid Sans Fallback", sans-serif; fill: #1f3d5a; }
+      .text { font: 500 14px "Noto Sans CJK SC", "WenQuanYi Zen Hei", "Droid Sans Fallback", sans-serif; fill: #2f4f6e; }
       .bubble { fill: #2f6ea3; }
       .card { fill: #f7fbff; stroke: #2f6ea3; stroke-width: 2; rx: 14; ry: 14; }
       .arrow { stroke: #2f6ea3; stroke-width: 2.5; marker-end: url(#m); fill: none; }
