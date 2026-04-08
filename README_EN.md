@@ -16,11 +16,21 @@ Affiliation: Professor Tang Lixu's research team, School of Wushu, Wuhan Sports 
 - Deploy local models to reduce costs and protect data privacy.
 - Provide web interface to lower usage threshold and support classroom demonstrations and public demos.
 
+## Latest Updates (2026-04)
+
+- Digital human interaction upgraded with server-side real TTS (edge-tts), reducing browser permission instability.
+- Text-driven action demo: parse action sequences from long text and present steps, common mistakes, and correction tips.
+- Synchronized playback: action demo can run in sync with generated narration audio.
+- Multimodal teaching tools improved: uploaded video analysis, real-time camera detection, and scoring feedback.
+- Deployment improvements: added Docker and docker-compose support, ready for Railway auto-deploy from GitHub.
+
 ## Features
 
 - Domain knowledge enhancement: Support txt and xlsx materials for knowledge base retrieval.
 - Local inference deployment: Support Ollama to minimize external dependencies.
 - Dual interface: Both CLI and Streamlit Web are available.
+- Digital teaching assistant: script polishing, real audio generation, and audio download.
+- Text-to-action teaching: multi-action sequence extraction with instructional correction hints.
 - Extensible architecture: Pre-reserved extensions for motion evaluation and research assessment modules.
 
 ## System Architecture
@@ -96,6 +106,12 @@ ollama pull nomic-embed-text
 ./scripts/health_check.sh
 ```
 
+### Run with Docker (Optional)
+
+```bash
+docker-compose up --build
+```
+
 ## Repository Structure
 
 - src: core logic
@@ -110,11 +126,19 @@ ollama pull nomic-embed-text
 - Web demo: run `./scripts/run_web.sh`.
 - Data demo: update `data/knowledge_base`, then rebuild the index before asking questions.
 
+## Public Sharing and Deployment
+
+- LAN demo: `streamlit run src/interface/app.py --server.address 0.0.0.0`
+- Temporary public tunnel: `./start_public.sh`
+- Stable production link: deploy on Railway with GitHub auto-deploy
+
+See full deployment guide: [DEPLOYMENT.md](DEPLOYMENT.md)
+
 ## Current Roadmap
 
-- Integrate motion recognition module
-- Record and visualize teaching evaluation data
-- Add automated tests and baseline evaluation scripts
+- Improve pose keypoint precision and fine-grained action scoring
+- Add classroom report export (PDF/image)
+- Add end-to-end tests and post-deploy health checks
 
 ## Open Source Workflow
 
