@@ -8,6 +8,12 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y \
     build-essential \
     git \
+    libgl1 \
+    libglib2.0-0 \
+    libsm6 \
+    libxext6 \
+    libxrender1 \
+    ffmpeg \
     && rm -rf /var/lib/apt/lists/*
 
 # 复制项目文件
